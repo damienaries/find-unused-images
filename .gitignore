@@ -1,0 +1,22 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+package-lock.json
+
+# Logs
+logs
+*.log
+yarn-debug.log*
+yarn-error.log*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+dist/
+build/
+coverage/
+
+# Local environment settings
+.env
