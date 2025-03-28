@@ -20,3 +20,4 @@ coverage/
 
 # Local environment settings
 .env
+node_modules/
