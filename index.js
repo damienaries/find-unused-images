@@ -4,42 +4,92 @@ const fs = require('fs');
 const path = require('path');
 const fg = require('fast-glob');
 
-async function findUnusedImages(
-	imageGlob = 'public/**/*.{jpg,jpeg,png,gif,svg,webp}'
-) {
-	// Find all images in the project
-	const imageFiles = await fg(imageGlob);
+// Set default config or use config file
+const defaultConfig = {
+	directories: ['./public', './src'],
+	fileTypes: [
+		'.js',
+		'.jsx',
+		'.ts',
+		'.tsx',
+		'.vue',
+		'.html',
+		'.css',
+		'.blade.php',
+	],
+	imageTypes: ['.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp'],
+};
 
-	// Find all the files that could reference images
-	const codeFiles = await fg([
-		'src/**/*.{js,jsx,ts,tsx,vue,html,css}',
-		'public/**/*.html',
-	]);
+const configPath = path.join(__dirname, 'config.json');
 
-	// Read all code files to check for image usage
-	const usedImages = new Set();
+let config = defaultConfig;
 
-	for (const file of codeFiles) {
-		const content = fs.readFileSync(file, 'utf8');
+if (fs.existsSync(configPath)) {
+	try {
+		config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+	} catch (e) {
+		console.error('Error reading config file', e);
+	}
+}
 
-		for (const image of imageFiles) {
-			const imageName = path.basename(image);
-			if (content.includes(imageName)) {
-				usedImages.add(image);
+// function to scan for image files ina  directory
+async function getImageFiles(directories, imageTypes) {
+	const imagePatterns = directories.map((directory) => {
+		path.join(directory, `**/*{${imageTypes.join(',')}}`);
+	});
+	return fg(imagePatterns).then((files) => files);
+}
+
+async function findUnusedImages(directories, fileTypes, imageTypes) {
+	try {
+		// get the image files from the directories
+		const imageFiles = await getImageFiles(directories, imageTypes);
+		console.log(`Found ${imageFiles.length} image files`);
+
+		// construct file patterns
+		const filePatterns = directories.map((dir) =>
+			path.join(dir, `**/*{${fileTypes.join(',')}}`)
+		);
+
+		// get all code files
+		const codeFiles = await fg(filePatterns);
+		console.log(`Found ${codeFiles.length} code files`);
+
+		// Read all code files to check for image usage
+		const usedImages = new Set();
+
+		for (const file of codeFiles) {
+			const content = fs.readFileSync(file, 'utf8');
+
+			for (const image of imageFiles) {
+				const imageName = path.basename(image);
+				if (content.includes(imageName)) {
+					usedImages.add(image);
+				}
 			}
 		}
+
+		// find the unused images
+		const unusedImages = imageFiles.filter((image) => !usedImages.has(image));
+
+		return unusedImages;
+	} catch (e) {
+		console.error('Error finding unused images', e);
 	}
-
-	// find the unused images
-	const unusedImages = imageFiles.filter((image) => !usedImages.has(image));
-
-	return unusedImages;
 }
 
 if (require.main === module) {
-	findUnusedImages().then((unusedImages) => {
-		console.log('Unused images', unusedImages);
-	});
+	findUnusedImages(config.directories, config.fileTypes, config.imageTypes)
+		.then((unusedImages) => {
+			if (unusedImages.length) {
+				console.log('Found unused images:', unusedImages);
+			} else {
+				console.log('No unused images found');
+			}
+		})
+		.catch((e) => {
+			console.error('Error finding unused images', e);
+		});
 }
 
 module.exports = findUnusedImages;
