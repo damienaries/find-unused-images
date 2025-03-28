@@ -1,0 +1,23 @@
+{
+	"name": "find-unused-images",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"dependencies": {
+		"fast-glob": "^3.3.3",
+		"glob": "^11.0.1"
+	},
+	"devDependencies": {
+		"eslint": "^9.23.0",
+		"prettier": "^3.5.3"
+	},
+	"bin": {
+		"find-unused-images": "./index.js"
+	}
+}
