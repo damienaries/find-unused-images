@@ -19,5 +19,9 @@
 	},
 	"bin": {
 		"find-unused-images": "./index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/damienaries/find-unused-images.git"
 	}
 }
