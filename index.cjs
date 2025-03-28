@@ -1,8 +1,13 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-const path = require('path');
-const fg = require('fast-glob');
+import { existsSync, readFileSync } from 'fs';
+import { join, basename } from 'path';
+import fg from 'fast-glob';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Set default config or use config file
 const defaultConfig = {
@@ -20,13 +25,13 @@ const defaultConfig = {
 	imageTypes: ['.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp'],
 };
 
-const configPath = path.join(__dirname, 'config.json');
+const configPath = join(__dirname, 'config.json');
 
 let config = defaultConfig;
 
-if (fs.existsSync(configPath)) {
+if (existsSync(configPath)) {
 	try {
-		config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+		config = JSON.parse(readFileSync(configPath, 'utf8'));
 	} catch (e) {
 		console.error('Error reading config file', e);
 	}
@@ -35,7 +40,7 @@ if (fs.existsSync(configPath)) {
 // function to scan for image files ina  directory
 async function getImageFiles(directories, imageTypes) {
 	const imagePatterns = directories.map((directory) => {
-		path.join(directory, `**/*{${imageTypes.join(',')}}`);
+		join(directory, `**/*{${imageTypes.join(',')}}`);
 	});
 	return fg(imagePatterns).then((files) => files);
 }
@@ -48,7 +53,7 @@ async function findUnusedImages(directories, fileTypes, imageTypes) {
 
 		// construct file patterns
 		const filePatterns = directories.map((dir) =>
-			path.join(dir, `**/*{${fileTypes.join(',')}}`)
+			join(dir, `**/*{${fileTypes.join(',')}}`)
 		);
 
 		// get all code files
@@ -59,10 +64,10 @@ async function findUnusedImages(directories, fileTypes, imageTypes) {
 		const usedImages = new Set();
 
 		for (const file of codeFiles) {
-			const content = fs.readFileSync(file, 'utf8');
+			const content = readFileSync(file, 'utf8');
 
 			for (const image of imageFiles) {
-				const imageName = path.basename(image);
+				const imageName = basename(image);
 				if (content.includes(imageName)) {
 					usedImages.add(image);
 				}
@@ -92,4 +97,4 @@ if (require.main === module) {
 		});
 }
 
-module.exports = findUnusedImages;
+export default findUnusedImages;

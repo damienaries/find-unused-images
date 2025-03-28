@@ -1,6 +1,10 @@
-const inquirer = require('inquirer');
-const fs = require('fs');
-const path = require('path');
+import inquirer from 'inquirer';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 async function askForConfig() {
 	const answers = await inquirer.prompt([

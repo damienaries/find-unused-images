@@ -1,0 +1,16 @@
+{
+  "directories": [
+    "./public",
+    "./src"
+  ],
+  "fileTypes": [
+    ".js",
+    ".jsx",
+    ".ts",
+    ".tsx",
+    ".vue",
+    ".blade.php",
+    ".html",
+    ".css"
+  ]
+}
