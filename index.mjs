@@ -83,7 +83,7 @@ async function findUnusedImages(directories, fileTypes, imageTypes) {
 	}
 }
 
-if (require.main === module) {
+if (import.meta.url === `file://${__filename}`) {
 	findUnusedImages(config.directories, config.fileTypes, config.imageTypes)
 		.then((unusedImages) => {
 			if (unusedImages.length) {
