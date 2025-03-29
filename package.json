@@ -1,6 +1,7 @@
 {
 	"name": "find-unused-images",
 	"version": "1.0.0",
+	"description": "Find unused images in your project",
 	"main": "index.js",
 	"type": "module",
 	"scripts": {
@@ -13,9 +14,8 @@
 		"find unused images",
 		"image optimization"
 	],
-	"author": "",
+	"author": "Damien Aries https://github.com/damienaries",
 	"license": "ISC",
-	"description": "",
 	"dependencies": {
 		"fast-glob": "^3.3.3",
 		"glob": "^11.0.1",
