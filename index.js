@@ -40,8 +40,9 @@ if (existsSync(configPath)) {
 // function to scan for image files ina  directory
 async function getImageFiles(directories, imageTypes) {
 	const imagePatterns = directories.map((directory) => {
-		join(directory, `**/*{${imageTypes.join(',')}}`);
+		return path.join(directory, `**/*{${imageTypes.join(',')}}`);
 	});
+
 	return fg(imagePatterns).then((files) => files);
 }
 
@@ -49,16 +50,25 @@ async function findUnusedImages(directories, fileTypes, imageTypes) {
 	try {
 		// get the image files from the directories
 		const imageFiles = await getImageFiles(directories, imageTypes);
-		console.log(`Found ${imageFiles.length} image files`);
+		const imageNames = imageFiles.map((image) =>
+			basename(image, path.extname(image))
+		);
 
 		// construct file patterns
 		const filePatterns = directories.map((dir) =>
-			join(dir, `**/*{${fileTypes.join(',')}}`)
+			path.join(dir, `**/*{${fileTypes.join(',')}}`)
 		);
+
+		console.log('Generated File Patterns:', filePatterns);
 
 		// get all code files
 		const codeFiles = await fg(filePatterns);
 		console.log(`Found ${codeFiles.length} code files`);
+
+		const componentRegex = new RegExp(
+			`<[a-zA-Z-]+[^>]*(?:icon|src|name|filename)=["']([^"']+)["']`,
+			'gi'
+		);
 
 		// Read all code files to check for image usage
 		const usedImages = new Set();
@@ -66,10 +76,26 @@ async function findUnusedImages(directories, fileTypes, imageTypes) {
 		for (const file of codeFiles) {
 			const content = readFileSync(file, 'utf8');
 
+			// check for direct file references
 			for (const image of imageFiles) {
 				const imageName = basename(image);
 				if (content.includes(imageName)) {
 					usedImages.add(image);
+				}
+			}
+
+			// check for component-based references
+			let match;
+			while ((match = componentRegex.exec(content)) !== null) {
+				const extractedName = match[1];
+				if (imageNames.includes(extractedName)) {
+					const fullPath = imageFiles.find((img) => {
+						return basename(img, path.extname(img)) === extractedName;
+					});
+					console.log('Found:', fullPath); // Debugging log
+					if (fullPath) {
+						usedImages.add(fullPath);
+					}
 				}
 			}
 		}

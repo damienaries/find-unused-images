@@ -1,7 +1,7 @@
 {
 	"name": "find-unused-images",
 	"version": "1.0.0",
-	"main": "index.mjs",
+	"main": "index.js",
 	"type": "module",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
@@ -26,7 +26,7 @@
 		"prettier": "^3.5.3"
 	},
 	"bin": {
-		"find-unused-images": "./index.mjs"
+		"find-unused-images": "./index.js"
 	},
 	"repository": {
 		"type": "git",

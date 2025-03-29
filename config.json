@@ -1,16 +1,14 @@
 {
-  "directories": [
-    "./public",
-    "./src"
-  ],
-  "fileTypes": [
-    ".js",
-    ".jsx",
-    ".ts",
-    ".tsx",
-    ".vue",
-    ".blade.php",
-    ".html",
-    ".css"
-  ]
+	"directories": ["./public", "./src", "./resources"],
+	"fileTypes": [
+		".js",
+		".jsx",
+		".ts",
+		".tsx",
+		".vue",
+		".blade.php",
+		".html",
+		".css"
+	],
+	"imageTypes": [".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp"]
 }

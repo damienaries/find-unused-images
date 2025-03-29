@@ -22,12 +22,20 @@ async function askForConfig() {
 				'Enter a comma separated list of file types to scan (default: .js, .jsx, .ts, .tsx, .vue, .blade.php, .html, .css):',
 			default: '.js, .jsx, .ts, .tsx, .vue, .blade.php, .html, .css',
 		},
+		{
+			type: 'input',
+			name: 'imageTypes',
+			message:
+				'Enter a comma separated list of file types to scan (default: png, jpg, jpeg, gif, svg, webp):',
+			default: 'png, jpg, jpeg, gif, svg, webp',
+		},
 	]);
 
 	// save config to file
 	const config = {
 		directories: answers.directories.split(',').map((dir) => dir.trim()),
 		fileTypes: answers.extensions.split(',').map((ext) => ext.trim()),
+		imageTypes: answers.imageTypes.split(',').map((ext) => ext.trim()),
 	};
 
 	const configFilePath = path.join(__dirname, 'config.json');
