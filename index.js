@@ -63,7 +63,7 @@ async function findUnusedImages(directories, fileTypes, imageTypes) {
 
 		// get all code files
 		const codeFiles = await fg(filePatterns);
-		console.log(`Found ${codeFiles.length} code files`);
+		console.log(`Scanning ${codeFiles.length} code files`);
 
 		const componentRegex = new RegExp(
 			`<[a-zA-Z-]+[^>]*(?:icon|src|name|filename)=["']([^"']+)["']`,
@@ -92,7 +92,6 @@ async function findUnusedImages(directories, fileTypes, imageTypes) {
 					const fullPath = imageFiles.find((img) => {
 						return basename(img, path.extname(img)) === extractedName;
 					});
-					console.log('Found:', fullPath); // Debugging log
 					if (fullPath) {
 						usedImages.add(fullPath);
 					}
