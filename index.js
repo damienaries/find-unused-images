@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 
 // Set default config or use config file
 const defaultConfig = {
-	directories: ['./public', './src'],
+	directories: ['./public', './src', './'],
 	fileTypes: [
 		'.js',
 		'.jsx',
@@ -63,6 +63,7 @@ async function findUnusedImages(directories, fileTypes, imageTypes) {
 
 		// get all code files
 		const codeFiles = await fg(filePatterns);
+		console.log(`Found ${imageFiles.length} image files`);
 		console.log(`Scanning ${codeFiles.length} code files`);
 
 		const componentRegex = new RegExp(

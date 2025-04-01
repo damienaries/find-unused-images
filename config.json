@@ -1,5 +1,5 @@
 {
-	"directories": ["./public", "./src", "./resources"],
+	"directories": ["./public", "./src", "./resources", "./", "./pages"],
 	"fileTypes": [
 		".js",
 		".jsx",

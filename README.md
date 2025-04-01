@@ -44,12 +44,17 @@ If you'd like to customize these settings, the tool will prompt you during insta
 ### Example
 
 ```bash
-$ npx find-unused-images
+$ find-unused-images
+Generated file patterns [
+	'public/**/*{.js,.jsx,.ts,.tsx,.vue,.blade.php,.html,.css}',
+  'src/**/*{.js,.jsx,.ts,.tsx,.vue,.blade.php,.html,.css}',
+	'resources/**/*{.js,.jsx,.ts,.tsx,.vue,.blade.php,.html,.css}'
+]
 Found 150 image files.
-Found 50 code files.
+Scanning 50 code files.
 Unused images:
-- public/images/logo.png
-- src/assets/bg.jpg
+- 'public/images/logo.png'
+- 'src/assets/bg.jpg'
 ```
 
 ## Custom Configuration
