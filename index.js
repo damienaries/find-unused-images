@@ -5,8 +5,9 @@ import { basename } from 'path';
 import fg from 'fast-glob';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import config from './config.json' assert { type: 'json' };
-
+const config = JSON.parse(
+	readFileSync(new URL('./config.json', import.meta.url))
+);
 const __filename = fileURLToPath(import.meta.url);
 
 // function to scan for image files ina  directory

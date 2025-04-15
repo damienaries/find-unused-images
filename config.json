@@ -1,6 +1,7 @@
 {
 	"directories": [
 		"./public/images",
+		"./public/img",
 		"./src/assets/images",
 		"./static/images",
 		"./src/lib/assets/images",
@@ -8,7 +9,11 @@
 		"./storage/app/public",
 		"./uploads",
 		"./media",
-		"./app/assets/images"
+		"./app/assets/images",
+		"./hooks",
+		"./pages",
+		"./styles",
+		"./components"
 	],
 	"fileTypes": [
 		".js",
