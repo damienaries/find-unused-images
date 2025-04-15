@@ -1,14 +1,29 @@
 {
-	"directories": ["./public", "./src", "./resources", "./", "./pages"],
+	"directories": [
+		"./public/images",
+		"./src/assets/images",
+		"./static/images",
+		"./src/lib/assets/images",
+		"./wwwroot/images",
+		"./storage/app/public",
+		"./uploads",
+		"./media",
+		"./app/assets/images"
+	],
 	"fileTypes": [
 		".js",
 		".jsx",
 		".ts",
 		".tsx",
 		".vue",
-		".blade.php",
+		".svelte",
 		".html",
-		".css"
+		".css",
+		".blade.php",
+		".cshtml",
+		".py",
+		".rb",
+		".php"
 	],
 	"imageTypes": [".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp"]
 }

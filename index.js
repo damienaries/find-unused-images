@@ -1,41 +1,13 @@
 #!/usr/bin/env node
 
-import { existsSync, readFileSync } from 'fs';
-import { join, basename } from 'path';
+import { readFileSync } from 'fs';
+import { basename } from 'path';
 import fg from 'fast-glob';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import config from './config.json' assert { type: 'json' };
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Set default config or use config file
-const defaultConfig = {
-	directories: ['./public', './src', './'],
-	fileTypes: [
-		'.js',
-		'.jsx',
-		'.ts',
-		'.tsx',
-		'.vue',
-		'.html',
-		'.css',
-		'.blade.php',
-	],
-	imageTypes: ['.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp'],
-};
-
-const configPath = join(__dirname, 'config.json');
-
-let config = defaultConfig;
-
-if (existsSync(configPath)) {
-	try {
-		config = JSON.parse(readFileSync(configPath, 'utf8'));
-	} catch (e) {
-		console.error('Error reading config file', e);
-	}
-}
 
 // function to scan for image files ina  directory
 async function getImageFiles(directories, imageTypes) {

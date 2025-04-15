@@ -5,8 +5,7 @@
 	"main": "index.js",
 	"type": "module",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"postinstall": "node ./postinstall.js"
+		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [
 		"unused images",
@@ -18,8 +17,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"fast-glob": "^3.3.3",
-		"glob": "^11.0.1",
-		"inquirer": "^12.5.0"
+		"glob": "^11.0.1"
 	},
 	"devDependencies": {
 		"eslint": "^9.23.0",
